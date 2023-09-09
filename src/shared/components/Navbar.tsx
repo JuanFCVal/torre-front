@@ -6,7 +6,12 @@ import { Link } from 'react-router-dom';
 interface INavbar {
   title: string
 }
-const pages = [
+
+interface Routes {
+  name: string
+  path: string
+}
+const pages: Routes[] = [
   {
     name: 'Search',
     path: '/search',
