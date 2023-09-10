@@ -37,6 +37,7 @@ export const favoriteSlice = createSlice({
     },
     addHistoryValue: (state, action: PayloadAction<IHistoryItem>) => {
       state.history.unshift(action.payload);
+      state.history = state.history.slice(0, 10);
 
     }
 
