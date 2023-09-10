@@ -29,7 +29,7 @@ export const Navbar: FC<INavbar> = ({ title = 'Torre' }) => {
       <Container sx={{ margin: '0' }} id='container'>
         <Toolbar disableGutters>
           <Paper sx={{ height: '40px', width:'40px'}}>
-            <img src="src/assets/images/logo.jpeg" style={{ objectFit: 'fill', width:' 100%' }}/>
+            <img src="/assets/images/logo.jpeg" style={{ objectFit: 'fill', width:' 100%' }}/>
           </Paper>
           <Typography
             variant="h6"

@@ -31,7 +31,7 @@ const SearchUsers:FC<ISearchUsers> = ({setResults, setLoading, onChangeQuery}) =
         const results = await apiAIService.searchPeopleByName(query).then(async (response) => {
               const { results } = response;
               return results;
-        }).catch(error => {
+        }).catch(() => {
           return []
         });
         setLoading(false)

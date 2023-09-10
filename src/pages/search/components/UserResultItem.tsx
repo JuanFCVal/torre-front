@@ -36,12 +36,12 @@ const UserResultItem: FC<IUserResultItem> = ({ user, showAddButton, showRemoveBu
         <>
             <ListItem alignItems="center" key={user.ardaId}  secondaryAction={
                 !userIsAlreadyFavorite() && (
-                    <IconButton >
+                    <IconButton onClick={showAddButton ? onAdd : onRemove}>
                         {
-                            showAddButton && ( <AddIcon sx={{color:'green', fontSize:'32px'} } onClick={onAdd}/>)
+                            showAddButton && ( <AddIcon sx={{color:'green', fontSize:'32px'} } />)
                         }
                         {
-                            showRemoveButton && ( <DeleteIcon sx={{color:'white', fontSize:'32px'}  } onClick={onRemove} />)
+                            showRemoveButton && ( <DeleteIcon sx={{color:'white', fontSize:'32px'}  }  />)
                         }
                      
                     </IconButton>)
@@ -55,7 +55,7 @@ const UserResultItem: FC<IUserResultItem> = ({ user, showAddButton, showRemoveBu
                     primary={
                         <>
                             {user.name}
-                            {user.verified && <img src="src/assets/icons/check.png" width={'15px'} style={{ marginLeft: '1rem' }} />}
+                            {user.verified && <img src="/assets/icons/check.png" width={'15px'} style={{ marginLeft: '1rem' }} />}
                         </>
                     }
                     secondary={
