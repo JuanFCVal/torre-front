@@ -25,7 +25,7 @@ const pages: Routes[] = [
 
 export const Navbar: FC<INavbar> = ({ title = 'Torre' }) => {
   return (
-    <AppBar position="static" id='appbar'>
+    <AppBar position='fixed' >
       <Container sx={{ margin: '0' }} id='container'>
         <Toolbar disableGutters>
           <Paper sx={{ height: '40px', width:'40px'}}>
