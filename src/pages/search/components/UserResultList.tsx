@@ -1,25 +1,39 @@
-import { FC} from "react"
+import { FC, useState } from 'react';
 import { IUserSearchByNameResponse } from "../../../interfaces/userSearchByName"
-import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
 import List from '@mui/material/List';
-import Avatar from '@mui/material/Avatar';
-import ListItemText from '@mui/material/ListItemText';
-import React from "react";
 import { Typography, Box } from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
+import UserResultItem from "./UserResultItem";
+import { apiLocalService } from "../../../services/api.local.service";
+import Snackbar from '@mui/material/Snackbar';
+import { useDispatch } from 'react-redux';
+import { addFavorite } from '../../../store/slices/favorites/favoritesSlice';
 interface IUserResultList {
     usersResponse: Array<IUserSearchByNameResponse>,
     loading: boolean,
     query: string
 }
+
+
 const UserResultList: FC<IUserResultList> = ({ usersResponse = [], loading = false, query }) => {
-    const redirectToTorre = (username: string) => {
-        window.open(`https://torre.ai/${username}`, '_blank')
+    const [showSnackSucces, setshowSnackSucces] = useState(false)
+    const dispatch = useDispatch()
+    const addUserToFavorite = (user: IUserSearchByNameResponse) => {
+        apiLocalService.addNewFavorite(user).then(
+            (response) => {
+                    setshowSnackSucces(true)
+                    dispatch(addFavorite(response))
+            }
+        )
     }
     return (
         <>
+                <Snackbar
+                key={'top' + 'right'}
+                open={showSnackSucces}
+                autoHideDuration={1000}
+                message="Agregado a favoritos"
+/>
             {
                 (loading  )&& (
                     <Box sx={{ width: '100%' }}>
@@ -40,39 +54,7 @@ const UserResultList: FC<IUserResultList> = ({ usersResponse = [], loading = fal
                    {
                         usersResponse.map(
                             (user) => (
-                                <>
-                                
-                               
-                                    <ListItem alignItems="center" key={user.ardaId} sx={{cursor: 'pointer'}} onClick={() => redirectToTorre(user.username)}>
-                                        <ListItemAvatar>
-                                            <Avatar alt={user.name} src={user.imageUrl} />
-                                        </ListItemAvatar>
-                                        <ListItemText
-                                            primary={
-                                                <>
-                                                    {user.name}
-                                                    {user.verified && <img src="src/assets/icons/check.png" width={'15px'} style={{ marginLeft: '1rem' }} />}
-                                                </>
-                                            }
-                                            secondary={
-                                                <React.Fragment>
-                                                    <Typography
-                                                        sx={{ display: 'inline' }}
-                                                        component="span"
-                                                        variant="body2"
-                                                        color="text.primary"
-                                                    >
-                                                        {user.professionalHeadline}
-
-                                                    </Typography>
-                                                </React.Fragment>
-                                            }
-                                        />
-                                    </ListItem>
-                                    <Divider variant="inset" component="li" />
-                              
-                                </>
-
+                                <UserResultItem user={user} key={user.ardaId} showAddButton onAdd={() => addUserToFavorite(user)}/>
                             )
                         )
                     }

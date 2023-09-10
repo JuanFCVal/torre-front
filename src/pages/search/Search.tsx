@@ -2,11 +2,11 @@ import './_search.scss'
 import Grid from '@mui/material/Grid';
 import { Box, Typography, Container } from '@mui/material';
 import HistoryList from './components/HistoryList';
-
-import { useState } from 'react';
+import {  useState } from 'react';
 import { IUserSearchByNameResponse } from '../../interfaces/userSearchByName';
 import UserResultList from './components/UserResultList';
 import SearchUsers from './components/SearchUsers';
+
 
 
 const SearchPage = () => {
@@ -31,7 +31,7 @@ const SearchPage = () => {
               <SearchUsers setResults={setSearchResult} setLoading={setLoading} onChangeQuery={setQuery}/>
             </form>    
                 <Container sx={{paddingLeft:'4rem !important', paddingRight:'4rem !important', borderRadius:'20%', marginTop:'1rem'}} >
-                  <UserResultList usersResponse={searchResults} loading={loading} query={query}/>
+                  <UserResultList  usersResponse={searchResults} loading={loading} query={query} />
                 </Container>
             </Container>
 

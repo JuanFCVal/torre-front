@@ -2,7 +2,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import HistoryItem from './HistoryItem';
-
+import '../_search.scss'
 export interface IUser {
   name: string,
   professionalHeadline: string,
@@ -34,7 +34,7 @@ const users: IUser[] = [
 ]
 const HistoryList = () => {
   return (
-    <List sx={{height:1, bgcolor: 'background.paper' }}>
+    <List sx={{height:1, bgcolor: 'background.paper' }} className='fade-in'>
     <ListItem>
       <ListItemText>
       Búsquedas recientes
