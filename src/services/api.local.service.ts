@@ -28,6 +28,18 @@ class ApiLocalService {
       return response.data
 }
 
+    async addHistoryValue(query: string)  {
+      const response = await this.axiosInstance.post(`${this.apiUrl}history`, {query})
+      return response.data
+
+    }
+
+    async getHistory() {
+      const limit = 10;
+      const response = await this.axiosInstance.get(`${this.apiUrl}history/${limit}`)
+      return response.data
+    }
+
 
   }
   

@@ -3,7 +3,7 @@ import { Box } from '@mui/material'
 import React, { FC, useEffect } from 'react'
 import { Navbar } from '../shared/components/Navbar'
 import { apiLocalService } from '../services/api.local.service'
-import { setFavorites } from '../store/slices/favorites/favoritesSlice'
+import { setFavorites, setHistory } from '../store/slices/favorites/favoritesSlice'
 import { useDispatch } from 'react-redux';
 
 interface IMainLayout {
@@ -18,6 +18,12 @@ const MainLayout: FC<IMainLayout> = ({ children, title = 'Torre'  }) => {
     apiLocalService.searchFavoritesByIp().then(
       (response) => {
         dispatch(setFavorites(response))
+      }
+    )
+    apiLocalService.getHistory().then(
+      (response) => {
+        console.log(response)
+        dispatch(setHistory(response))
       }
     )
   }, [])
