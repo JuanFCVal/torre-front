@@ -1,8 +1,8 @@
 
 import axios from 'axios';
-import { AxiosInstance } from '../../node_modules/axios/index.d';
+import { AxiosInstance } from 'axios';
 
-class ApiService {
+class ApiAIService {
     apiUrl: string;
     axiosInstance: AxiosInstance;
     constructor() {
@@ -26,9 +26,8 @@ class ApiService {
           };
           const response = await this.axiosInstance.post(`${this.apiUrl}/_search`, requestBody)
           return response.data
-    
-
     }
+
   }
   
-export const apiService = new ApiService();
+export const apiAIService = new ApiAIService();

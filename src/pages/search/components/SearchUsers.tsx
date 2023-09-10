@@ -1,7 +1,7 @@
 import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import {  FC, useEffect, useState } from 'react';
-import { apiService } from '../../../services/api.service';
+import { apiAIService } from '../../../services/api.ai.service';
 import { IUserSearchByNameResponse } from '../../../interfaces/userSearchByName';
 
 interface ISearchUsers {
@@ -22,7 +22,7 @@ const SearchUsers:FC<ISearchUsers> = ({setResults, setLoading, onChangeQuery}) =
         return
       }
       setLoading(true)
-      const results = await apiService.searchPeopleByName(query).then(async (response) => {
+      const results = await apiAIService.searchPeopleByName(query).then(async (response) => {
             const { results } = response;
             return results;
         
