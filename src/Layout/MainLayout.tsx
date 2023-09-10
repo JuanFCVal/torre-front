@@ -12,7 +12,7 @@ const MainLayout: FC<IMainLayout> = ({ children, title = 'Torre'  }) => (
     <>
     <Box sx={{ flexFlow: 1 }}>
     <Navbar title={title}></Navbar>
-    <main style={{padding : '1rem'}}>
+    <main  style={{height:'100%'}}>
         {children}
     </main>
     </Box>
