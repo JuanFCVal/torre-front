@@ -3,6 +3,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import {  FC, useEffect, useState } from 'react';
 import { apiAIService } from '../../../services/api.ai.service';
 import { IUserSearchByNameResponse } from '../../../interfaces/userSearchByName';
+import { useDispatch } from 'react-redux';
 
 interface ISearchUsers {
   setResults: (results: Array<IUserSearchByNameResponse>) => void
@@ -13,6 +14,8 @@ interface ISearchUsers {
 const SearchUsers:FC<ISearchUsers> = ({setResults, setLoading, onChangeQuery}) => {
   const [query, setQuery] = useState('')
   const _debounceTime = 300
+  const dispatch = useDispatch()
+   
   useEffect(() => {
     //debounce
    const timeOut = setTimeout(async () => {
@@ -31,6 +34,8 @@ const SearchUsers:FC<ISearchUsers> = ({setResults, setLoading, onChangeQuery}) =
       });
       setLoading(false)
      setResults(results)
+
+
     }, _debounceTime)
     return () => clearTimeout(timeOut)
   }, [query])

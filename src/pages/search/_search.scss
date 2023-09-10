@@ -3,5 +3,19 @@
 .full-page{
     height: 100%;
     margin-top: $nav-bar-height;
-  
 }
+
+@keyframes fade-in {
+    from {
+      opacity: 0; /* Start with opacity 0 */
+    }
+    to {
+      opacity: 1; /* End with opacity 1 */
+    }
+  }
+  
+  /* Apply the animation to an element */
+  .fade-in {
+    animation: fade-in 500ms ease-in-out; /* Use the defined keyframe animation */
+  }
+
