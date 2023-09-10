@@ -3,7 +3,9 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import {  FC, useEffect, useState } from 'react';
 import { apiAIService } from '../../../services/api.ai.service';
 import { IUserSearchByNameResponse } from '../../../interfaces/userSearchByName';
+import { apiLocalService } from '../../../services/api.local.service';
 import { useDispatch } from 'react-redux';
+import { addHistoryValue } from '../../../store/slices/favorites/favoritesSlice';
 
 interface ISearchUsers {
   setResults: (results: Array<IUserSearchByNameResponse>) => void
@@ -13,9 +15,8 @@ interface ISearchUsers {
 
 const SearchUsers:FC<ISearchUsers> = ({setResults, setLoading, onChangeQuery}) => {
   const [query, setQuery] = useState('')
-  const _debounceTime = 300
+  const _debounceTime = 300   
   const dispatch = useDispatch()
-   
   useEffect(() => {
     //debounce
    const timeOut = setTimeout(async () => {
@@ -24,22 +25,33 @@ const SearchUsers:FC<ISearchUsers> = ({setResults, setLoading, onChangeQuery}) =
         setResults([])
         return
       }
-      setLoading(true)
-      const results = await apiAIService.searchPeopleByName(query).then(async (response) => {
-            const { results } = response;
-            return results;
-        
-      }).catch(error => {
-        return []
-      });
-      setLoading(false)
-     setResults(results)
 
+      if(query.length >= 2){
+        setLoading(true)
+        const results = await apiAIService.searchPeopleByName(query).then(async (response) => {
+              const { results } = response;
+              return results;
+        }).catch(error => {
+          return []
+        });
+        setLoading(false)
+       setResults(results)
+       postNewHistoryItem()
+     }
 
     }, _debounceTime)
     return () => clearTimeout(timeOut)
   }, [query])
 
+  const postNewHistoryItem = () => {
+    apiLocalService.addHistoryValue(query).then(
+      () => {
+        dispatch(addHistoryValue({query}))
+   
+      }
+    )
+  
+  }
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value)
   }

@@ -1,16 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 import { IUserSearchByNameResponse } from '../../../interfaces/userSearchByName';
+import { IHistoryItem } from '../../../pages/search/components/HistoryItem';
 
 // Define una interfaz para el estado
 interface ContentSlice {
   favorites: IUserSearchByNameResponse[];
+  history: IHistoryItem[];
 
 }
 
 // Define el estado inicial
 const initialState: ContentSlice = {
   favorites: [],
+  history: [],
 
 };
 
@@ -28,13 +31,21 @@ export const favoriteSlice = createSlice({
       state.favorites = state.favorites.filter(
         (favorite) => (favorite.ardaId !== action.payload.ardaId)
       )
+    },
+    setHistory: (state, action: PayloadAction<IHistoryItem[]>) => {
+      state.history = action.payload;
+    },
+    addHistoryValue: (state, action: PayloadAction<IHistoryItem>) => {
+      state.history.unshift(action.payload);
+      state.history = state.history.slice(0, 10);
+
     }
 
   
   }
 });
 
-export const { setFavorites, addFavorite, removeFavorite } = favoriteSlice.actions;
+export const { setFavorites, addFavorite, removeFavorite, setHistory , addHistoryValue} = favoriteSlice.actions;
 
 // Selector para acceder a los favoritos
 export const selectFavorites = (state: RootState) => state.favorite.favorites;
