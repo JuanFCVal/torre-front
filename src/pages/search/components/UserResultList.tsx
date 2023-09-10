@@ -15,6 +15,9 @@ interface IUserResultList {
     query: string
 }
 const UserResultList: FC<IUserResultList> = ({ usersResponse = [], loading = false, query }) => {
+    const redirectToTorre = (username: string) => {
+        window.open(`https://torre.ai/${username}`, '_blank')
+    }
     return (
         <>
             {
@@ -36,17 +39,19 @@ const UserResultList: FC<IUserResultList> = ({ usersResponse = [], loading = fal
             <List sx={{ width: '100%', bgcolor: 'background.paper', borderRadius: '1rem', maxHeight: '500px', overflowY: 'scroll' }}>
                    {
                         usersResponse.map(
-                            (result) => (
+                            (user) => (
                                 <>
-                                    <ListItem alignItems="center" key={result.ardaId}>
+                                
+                               
+                                    <ListItem alignItems="center" key={user.ardaId} sx={{cursor: 'pointer'}} onClick={() => redirectToTorre(user.username)}>
                                         <ListItemAvatar>
-                                            <Avatar alt={result.name} src={result.imageUrl} />
+                                            <Avatar alt={user.name} src={user.imageUrl} />
                                         </ListItemAvatar>
                                         <ListItemText
                                             primary={
                                                 <>
-                                                    {result.name}
-                                                    {result.verified && <img src="src/assets/icons/check.png" width={'15px'} style={{ marginLeft: '1rem' }} />}
+                                                    {user.name}
+                                                    {user.verified && <img src="src/assets/icons/check.png" width={'15px'} style={{ marginLeft: '1rem' }} />}
                                                 </>
                                             }
                                             secondary={
@@ -57,7 +62,7 @@ const UserResultList: FC<IUserResultList> = ({ usersResponse = [], loading = fal
                                                         variant="body2"
                                                         color="text.primary"
                                                     >
-                                                        {result.professionalHeadline}
+                                                        {user.professionalHeadline}
 
                                                     </Typography>
                                                 </React.Fragment>
@@ -65,7 +70,9 @@ const UserResultList: FC<IUserResultList> = ({ usersResponse = [], loading = fal
                                         />
                                     </ListItem>
                                     <Divider variant="inset" component="li" />
+                              
                                 </>
+
                             )
                         )
                     }
